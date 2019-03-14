@@ -2,7 +2,7 @@ package models
 
 import (
 	"fmt"
-	"private/pkg/setting"
+	"guardTai/pkg/setting"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"

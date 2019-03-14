@@ -1,8 +1,8 @@
 package context
 
 import (
-	"private/models"
-	"private/pkg/setting"
+	"guardTai/models"
+	"guardTai/pkg/setting"
 
 	"github.com/op/go-logging"
 )

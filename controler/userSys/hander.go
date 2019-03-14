@@ -1,7 +1,7 @@
 package userSys
 
 import (
-	"private/context"
+	"guardTai/context"
 
 	logging "github.com/op/go-logging"
 )

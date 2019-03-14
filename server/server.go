@@ -1,6 +1,6 @@
 package server
 
-import "private/pkg/setting"
+import "guardTai/pkg/setting"
 
 type Server interface {
 	Start() (err error)

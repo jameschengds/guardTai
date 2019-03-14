@@ -2,10 +2,11 @@ package server
 
 import (
 	"fmt"
-	"private/context"
-	"private/controler/userSys"
-	set "private/pkg/setting"
-	"private/routers"
+	"guardTai/context"
+	"guardTai/controler/userSys"
+	set "guardTai/pkg/setting"
+
+	"github.com/gin-gonic/gin"
 
 	"github.com/op/go-logging"
 )
@@ -23,9 +24,11 @@ type ServerImpl struct {
 
 func (s *ServerImpl) Start() (err error) {
 	// start to serve http connections
-	r := routers.SetupRouter()
+	//r := s.SetupRouter()
+	r := gin.Default()
+	r.GET("/test", s.userSysHandler.Register)
 	// Listen and Server in 0.0.0.0:8080
-	r.Run(":8080")
+	r.Run()
 	return nil
 }
 func (s *ServerImpl) init() (err error) {
