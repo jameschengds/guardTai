@@ -1,2 +1,6 @@
-# private
-first commit
+# 一个功能的区块连钱包
+---
+## 目标是实现eth，eos的转账交易
+---
+##如果有时间可以加上溯源
+First commit
