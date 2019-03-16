@@ -1,6 +1,7 @@
 package context
 
 import (
+	"guardTai/blockchain"
 	"guardTai/models"
 	"guardTai/pkg/setting"
 
@@ -13,8 +14,9 @@ var (
 )
 
 type Context struct {
-	Config  *setting.TitanSrvcConfig
-	Storage models.DBBackend
+	Config   *setting.TitanSrvcConfig
+	BCServer *blockchain.Eos
+	Storage  models.DBBackend
 }
 
 func GetServerContext() *Context {

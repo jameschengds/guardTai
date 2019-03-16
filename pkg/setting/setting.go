@@ -18,9 +18,10 @@ type TitanSrvcConfig struct {
 	HTTPPort     int
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
-
-	JwtSecret string
-	Database  Database
+	EOS          string
+	JwtSecret    string
+	Database     Database
+	Eos          Eos
 }
 type Database struct {
 	Host         string
@@ -35,6 +36,9 @@ type Database struct {
 	MaxIdleConns int
 	MaxConns     int
 }
+type Eos struct {
+	PRC_SERVE string
+}
 
 func GetServiceCfg() (*TitanSrvcConfig, error) {
 	var err error
@@ -42,22 +46,27 @@ func GetServiceCfg() (*TitanSrvcConfig, error) {
 	getServiceCfg.Cfg, err = ini.Load("conf/app.ini")
 	err = getServiceCfg.LoadBaseCfg()
 	if err != nil {
-		logger.Errorf("Failed to load http client config: %v", err)
+		logger.Errorf("Failed to LoadBaseCfg config: %v", err)
 		return nil, err
 	}
 	err = getServiceCfg.LoadServer()
 	if err != nil {
-		logger.Errorf("Failed to load http client config: %v", err)
+		logger.Errorf("Failed to LoadServer config: %v", err)
 		return nil, err
 	}
 	err = getServiceCfg.LoadApp()
 	if err != nil {
-		logger.Errorf("Failed to load http client config: %v", err)
+		logger.Errorf("Failed to LoadApp config: %v", err)
 		return nil, err
 	}
 	err = getServiceCfg.LoadDB()
 	if err != nil {
-		logger.Errorf("Failed to load http client config: %v", err)
+		logger.Errorf("Failed to LoadDB config: %v", err)
+		return nil, err
+	}
+	err = getServiceCfg.LoadEOS()
+	if err != nil {
+		logger.Errorf("Failed toLoadEOS config: %v", err)
 		return nil, err
 	}
 	return getServiceCfg, nil
@@ -104,6 +113,17 @@ func (c *TitanSrvcConfig) LoadDB() error {
 	c.Database.User = sec.Key("USER").String()
 	c.Database.Host = sec.Key("HOST").String()
 	c.Database.Password = sec.Key("PASSWORD").String()
+
+	return nil
+}
+
+func (c *TitanSrvcConfig) LoadEOS() error {
+	sec, err := c.Cfg.GetSection("eos")
+	if err != nil {
+		log.Fatalf("Fail to get section 'eos': %v", err)
+		return err
+	}
+	c.Database.Address = sec.Key("PRC_SERVE").String()
 
 	return nil
 }
