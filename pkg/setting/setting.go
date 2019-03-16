@@ -18,10 +18,9 @@ type TitanSrvcConfig struct {
 	HTTPPort     int
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
-	EOS          string
 	JwtSecret    string
 	Database     Database
-	Eos          Eos
+	EOS          Eos
 }
 type Database struct {
 	Host         string
@@ -123,7 +122,7 @@ func (c *TitanSrvcConfig) LoadEOS() error {
 		log.Fatalf("Fail to get section 'eos': %v", err)
 		return err
 	}
-	c.Database.Address = sec.Key("PRC_SERVE").String()
+	c.EOS.PRC_SERVE = sec.Key("PRC_SERVE").String()
 
 	return nil
 }

@@ -32,6 +32,11 @@ func (c *Context) Init() error {
 		logger.Errorf("Failed to initialize storage backend: %+v", err)
 		return err
 	}
+	if err := c.bcServerInit(); err != nil {
+		logger.Errorf("Failed to initialize bcServer backend: %+v", err)
+		return err
+	}
+
 	return nil
 }
 
@@ -40,6 +45,16 @@ func (c *Context) storageInit() error {
 	c.Storage, err = models.NewDbBackend(&c.Config.Database)
 	if err != nil {
 		logger.Errorf("New database backend error, %+v", err)
+		return err
+	}
+	return nil
+}
+
+func (c *Context) bcServerInit() error {
+	var err error
+	c.BCServer = blockchain.EOSCilentInit(c.Config.EOS.PRC_SERVE)
+	if err != nil {
+		logger.Errorf("New EOSCilent backend error, %+v", err)
 		return err
 	}
 	return nil
