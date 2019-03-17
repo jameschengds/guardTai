@@ -15,7 +15,7 @@ var (
 type TitanSrvcConfig struct {
 	Cfg          *ini.File
 	RunMode      string
-	HTTPPort     int
+	HTTPPort     string
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 	JwtSecret    string
@@ -83,7 +83,7 @@ func (c *TitanSrvcConfig) LoadServer() error {
 		return err
 	}
 
-	c.HTTPPort = sec.Key("HTTP_PORT").MustInt(8000)
+	c.HTTPPort = sec.Key("HTTP_PORT").MustString("8000")
 	c.ReadTimeout = time.Duration(sec.Key("READ_TIMEOUT").MustInt(60)) * time.Second
 	c.WriteTimeout = time.Duration(sec.Key("WRITE_TIMEOUT").MustInt(60)) * time.Second
 	return nil
