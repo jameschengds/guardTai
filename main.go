@@ -1,11 +1,10 @@
 package main
 
 import (
-	"guardTai/server"
+	set "github.com/jameschengds/guardTai/pkg/setting"
 
+	"github.com/jameschengds/guardTai/server"
 	"github.com/op/go-logging"
-
-	set "guardTai/pkg/setting"
 )
 
 var logger = logging.MustGetLogger("main")

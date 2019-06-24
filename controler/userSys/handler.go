@@ -1,7 +1,7 @@
 package userSys
 
 import (
-	"guardTai/context"
+	"github.com/jameschengds/guardTai/context"
 
 	logging "github.com/op/go-logging"
 )

@@ -1,10 +1,9 @@
 package context
 
 import (
-	"guardTai/blockchain"
-	"guardTai/models"
-	"guardTai/pkg/setting"
-
+	"github.com/jameschengds/guardTai/blockchain"
+	"github.com/jameschengds/guardTai/models"
+	"github.com/jameschengds/guardTai/pkg/setting"
 	"github.com/op/go-logging"
 )
 

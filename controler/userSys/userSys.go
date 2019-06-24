@@ -1,10 +1,10 @@
 package userSys
 
 import (
-	"guardTai/api"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jameschengds/guardTai/api"
 )
 
 type Turn struct {
@@ -24,3 +24,14 @@ func (h *RestHandler) Register(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, id)
 }
+
+//func (h *RestHandler) NewAccount(c *gin.Context) {
+//	req := &api.NewAccountReq{}
+//
+//	if err := c.BindJSON(req); err != nil {
+//		c.JSON(http.StatusBadRequest, "param error")
+//		return
+//	}
+//	//id, err := h.srvcContext.BCServer.NewAccount()
+//
+//}

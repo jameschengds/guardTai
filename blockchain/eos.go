@@ -3,11 +3,13 @@ package blockchain
 import (
 	"encoding/hex"
 	"encoding/json"
-
-	"github.com/op/go-logging"
+	"fmt"
 
 	"github.com/eoscanada/eos-go"
+	"github.com/eoscanada/eos-go/ecc"
+	"github.com/eoscanada/eos-go/system"
 	"github.com/eoscanada/eos-go/token"
+	"github.com/op/go-logging"
 )
 
 var (
@@ -60,8 +62,14 @@ func (e *Eos) PushTX(userAccount, accountTo, userPk, memo string) (string, error
 		logger.Errorf("json marshalling transaction: %s", err)
 		return "", nil
 	}
+	packetContent, err := json.MarshalIndent(packedTx, "", "  ")
+	if err != nil {
+		logger.Errorf("json marshalling transaction: %s", err)
+		return "", nil
+	}
 
 	logger.Debug(string(content))
+	logger.Debug(string(packetContent))
 
 	response, err := e.EOSClint.PushTransaction(packedTx)
 	if err != nil {
@@ -70,4 +78,18 @@ func (e *Eos) PushTX(userAccount, accountTo, userPk, memo string) (string, error
 	}
 
 	return hex.EncodeToString(response.Processed.ID), err
+}
+
+func (e *Eos) NewAccount(creator, newAccount eos.AccountName, pubKey ecc.PublicKey, buyRAMAmount, cpuStake, netStake eos.Asset, doTransfer bool) {
+	actions := []*eos.Action{}
+	actions = append(actions, system.NewNewAccount(creator, newAccount, pubKey))
+	actions = append(actions, system.NewDelegateBW(creator, newAccount, cpuStake, netStake, doTransfer))
+	actions = append(actions, system.NewBuyRAM(creator, newAccount, uint64(buyRAMAmount.Amount)))
+	resp, err := e.EOSClint.SignPushActions(actions...)
+	if err == nil {
+		data, _ := json.MarshalIndent(resp, "", "  ")
+		fmt.Println(string(data))
+	} else {
+		fmt.Println(err)
+	}
 }

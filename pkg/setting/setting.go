@@ -37,6 +37,8 @@ type Database struct {
 }
 type Eos struct {
 	PRC_SERVE string
+	USER      string
+	PubKey    string
 }
 
 func GetServiceCfg() (*TitanSrvcConfig, error) {
@@ -123,6 +125,8 @@ func (c *TitanSrvcConfig) LoadEOS() error {
 		return err
 	}
 	c.EOS.PRC_SERVE = sec.Key("PRC_SERVE").String()
+	c.EOS.USER = sec.Key("USER").String()
+	c.EOS.PubKey = sec.Key("PubKey").String()
 
 	return nil
 }

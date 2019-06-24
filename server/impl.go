@@ -2,10 +2,11 @@ package server
 
 import (
 	"fmt"
-	"guardTai/context"
-	"guardTai/controler/userSys"
-	set "guardTai/pkg/setting"
 
+	set "github.com/jameschengds/guardTai/pkg/setting"
+
+	"github.com/jameschengds/guardTai/context"
+	"github.com/jameschengds/guardTai/controler/userSys"
 	"github.com/op/go-logging"
 )
 

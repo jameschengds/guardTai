@@ -2,8 +2,8 @@ package models
 
 import (
 	"fmt"
-	"guardTai/pkg/setting"
 
+	"github.com/jameschengds/guardTai/pkg/setting"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 

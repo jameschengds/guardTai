@@ -1,6 +1,6 @@
 package server
 
-import "guardTai/pkg/setting"
+import "github.com/jameschengds/guardTai/pkg/setting"
 
 type Server interface {
 	Start() (err error)

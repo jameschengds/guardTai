@@ -1,0 +1,64 @@
+<!--
+sha512-WVarvM+kg5FyfhRnQH8ZjSswAaUctdOxvsXCXWWwfpV7/vb3Phy5KB3rjKwV8h3+9evInAsyLnxvDsdD+Fd6BA== lib/eos.js
+sha512-vNyLnOEb7uFmEtVbLnyZQ9/k4zckM2Vu3jJOKq6XfWEVZG0yKcjDExVN4EQ7e3F+rePWRncMolI2xFi/3qo62A== lib/eos.min.js
+sha512-ZhiO8AyYgrZOyDo3y40LVg1YkjqjUr9hYO+te8IYHU1gfAmyZxfut9CQj73+mEgC9u7GV2Gttr3cxTh7QH0rkw== lib/eos.min.js.map
+-->
+{{define "template/eos.html"}}
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <script src="https://cdn.jsdelivr.net/npm/eosjs@16.0.0/lib/eos.min.js"
+            integrity="sha512-vNyLnOEb7uFmEtVbLnyZQ9/k4zckM2Vu3jJOKq6XfWEVZG0yKcjDExVN4EQ7e3F+rePWRncMolI2xFi/3qo62A=="
+            crossorigin="anonymous"></script>
+
+    <script>
+        let httpEndpoint= 'https://api-kylin.eoslaomao.com',
+                config = {
+                    chainId: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191', // 32 byte (64 char) hex string
+                    keyProvider: ['5JTdbV8DzmW6gAgkHaUPzk7uoWa1FsiX4SxPGjPXjfpvVCH2vyV'], // WIF string or array of keys..
+                    httpEndpoint:httpEndpoint ,
+                    expireInSeconds: 60,
+                    broadcast: true,
+                    verbose: true, // API activity
+                    sign: true
+                }
+        eos = Eos(config)
+        async function transaction() {
+            pubkey = 'EOS5mT8vrT9guF4S67w5YpXAPDhFzWLZsNfr7YZ6NDYgzDXD5GfiT'
+
+            let createor = "chengqian111"
+            let acocunt = "kunge1122334"
+
+            let data = await eos.transaction(tr => {
+                tr.newaccount({
+                    creator: createor,
+                    name: acocunt,
+                    owner: pubkey,
+                    active: pubkey
+                })
+
+                tr.buyrambytes({
+                    payer: createor,
+                    receiver: acocunt,
+                    bytes: 8192
+                })
+
+                tr.delegatebw({
+                    from: createor,
+                    receiver: acocunt,
+                    stake_net_quantity: '10.0000 EOS',
+                    stake_cpu_quantity: '10.0000 EOS',
+                    transfer: 0
+                })
+            })
+
+            console.log(JSON.stringify(data))
+        }
+    </script>
+</head>
+<body>
+See console object: Eos
+</body>
+</html>
+{{end}}
